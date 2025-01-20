@@ -1,0 +1,30 @@
+﻿using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Runtime.Versioning;
+
+// General Information about an assembly is controlled through the following
+// set of attributes. Change these attribute values to modify the information
+// associated with an assembly.
+[assembly: AssemblyTitle("GenericFeedWizard")]
+[assembly: AssemblyDescription("Generate boilerplate SQL for loading feed files")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("SRUC")]                                         // Used to define directory for user.config and Common & AppData directories
+[assembly: AssemblyProduct("GenericFeedWizard")]                             // Used to define Common & AppData directories
+[assembly: AssemblyCopyright("Copyright © SRUC 2021-$WCNOW=%Y$")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]
+
+// Setting ComVisible to false makes the types in this assembly not visible
+// to COM components.  If you need to access a type in this assembly from
+// COM, set the ComVisible attribute to true on that type.
+[assembly: ComVisible(false)]
+
+// The following GUID is for the ID of the typelib if this project is exposed to COM
+[assembly: Guid("6318701f-322d-41cd-89c9-7b59bfae44b6")]
+
+// Version numbers
+[assembly: AssemblyVersion("2.0.0.0")]               // Used to define directory for user.config and by CLR for any referencing assemblies
+[assembly: AssemblyFileVersion("2.0.$WCLOGCOUNT$.$WCUNVER?1:0$$WCMODS?2:0$")]			// Displayed in windows explorer as File Version
+[assembly: AssemblyInformationalVersion("2.0.$WCLOGCOUNT$+$WCREV$")]  // Displayed in windows explorer as Product Version
+
+[assembly: SupportedOSPlatform("windows6.1")]

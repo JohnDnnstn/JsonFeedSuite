@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	<OutputType>WinExe</OutputType>
+	<TargetFramework>net8.0-windows10.0.17763.0</TargetFramework>
+	<PlatformName>windows</PlatformName>
+	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+	<Nullable>enable</Nullable>
+	<UseWindowsForms>true</UseWindowsForms>
+	<ImplicitUsings>enable</ImplicitUsings>
+	<AssemblyName>GenericJsonWizard2</AssemblyName>
+	<RootNamespace>GenericJsonWizard</RootNamespace>
+	<GenerateDocumentationFile>False</GenerateDocumentationFile>
+	<ApplicationIcon>Icojoy-Enjoyment-Wizard.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+	<Content Include="Icojoy-Enjoyment-Wizard.ico" />
+  </ItemGroup>
+	
+	<ItemGroup>
+		<Compile Update=".\ChosenData.*.cs">
+			<DependentUpon>.\ChosenData.cs</DependentUpon>
+		</Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectCapability Include="ConfigurableFileNesting" />
+		<ProjectCapability Include="ConfigurableFileNestingFeatureEnabled" />
+	</ItemGroup>
+
+	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+		<Exec Command="&quot;$(ProjectDir)Properties\PreBuild.cmd&quot; &quot;$(SolutionDir)&quot;" />
+	</Target>
+</Project>

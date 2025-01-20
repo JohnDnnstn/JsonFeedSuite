@@ -1,0 +1,5 @@
+bin
+obj
+.vs
+.editorconfig
+/GenericJsonWizard2/Properties/AssemblyInfo.cs
