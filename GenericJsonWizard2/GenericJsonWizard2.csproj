@@ -8,10 +8,12 @@
 	<Nullable>enable</Nullable>
 	<UseWindowsForms>true</UseWindowsForms>
 	<ImplicitUsings>enable</ImplicitUsings>
+	  
 	<AssemblyName>GenericJsonWizard2</AssemblyName>
 	<RootNamespace>GenericJsonWizard</RootNamespace>
 	<GenerateDocumentationFile>False</GenerateDocumentationFile>
 	<ApplicationIcon>Icojoy-Enjoyment-Wizard.ico</ApplicationIcon>
+	<GenerateResourceWarnOnBinaryFormatterUse>false</GenerateResourceWarnOnBinaryFormatterUse>
   </PropertyGroup>
 
   <ItemGroup>

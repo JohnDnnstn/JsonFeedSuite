@@ -6,7 +6,8 @@ public class Identity : Metadata
 {
     public string SerialName { get; set; } = "";
 
-    public override string Default {
+    public override string Default
+    {
         get
         {
             if (SerialName.IsWhite())

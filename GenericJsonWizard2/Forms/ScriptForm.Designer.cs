@@ -124,9 +124,9 @@
             ChkCustomPostTransfer.AutoSize = true;
             ChkCustomPostTransfer.Location = new Point(9, 88);
             ChkCustomPostTransfer.Name = "ChkCustomPostTransfer";
-            ChkCustomPostTransfer.Size = new Size(164, 19);
+            ChkCustomPostTransfer.Size = new Size(160, 19);
             ChkCustomPostTransfer.TabIndex = 2;
-            ChkCustomPostTransfer.Text = "Custom post-Transfer SQL";
+            ChkCustomPostTransfer.Text = "Custom post-Targets SQL";
             ChkCustomPostTransfer.UseVisualStyleBackColor = true;
             ChkCustomPostTransfer.CheckedChanged += ChkCustomPostTransfer_CheckedChanged;
             // 
@@ -145,9 +145,9 @@
             ChkCustomPreTransfer.AutoSize = true;
             ChkCustomPreTransfer.Location = new Point(9, 22);
             ChkCustomPreTransfer.Name = "ChkCustomPreTransfer";
-            ChkCustomPreTransfer.Size = new Size(158, 19);
+            ChkCustomPreTransfer.Size = new Size(154, 19);
             ChkCustomPreTransfer.TabIndex = 0;
-            ChkCustomPreTransfer.Text = "Custom pre-Transfer SQL";
+            ChkCustomPreTransfer.Text = "Custom pre-Targets SQL";
             ChkCustomPreTransfer.UseVisualStyleBackColor = true;
             ChkCustomPreTransfer.CheckedChanged += ChkCustomPreTransfer_CheckedChanged;
             // 

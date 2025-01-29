@@ -1,16 +1,15 @@
 ﻿using GenericJsonSuite.EtlaToolbelt.Forms;
 using GenericJsonWizard.BackingData.ColumnMetadata;
-using System.Text.Json;
 
 namespace GenericJsonWizard.BackingData;
 
 public class ColumnsData : IWizardData
 {
-    public bool ShowJsonEntities { get => ChosenData.ShowJsonEntities; set => ChosenData.ShowJsonEntities = value; }
+    public static bool ShowJsonEntities { get => ChosenData.ShowJsonEntities; set => ChosenData.ShowJsonEntities = value; }
     public List<int> ColumnIds { get; set; } = [];
 
 
-    internal List<JsonColumn> ColumnMetadata
+    internal static List<JsonColumn> ColumnMetadata
     {
         get { return ChosenData.GetAllVisibleJsonColumns(); }
         //get { return GetAllSchemaColumns(ShowJsonEntities); }
@@ -27,48 +26,48 @@ public class ColumnsData : IWizardData
         }
     }
 
-    private List<JsonColumn> GetAllSchemaColumns(bool IncludeNonLeafEntities = true)
-    {
-        List<JsonColumn> answer = [];
-        foreach (int identity in ColumnIds)
-        {
-            if (ChosenData.TryGetJsonColumn(identity, out JsonColumn col))
-            {
-                if (IncludeNonLeafEntities || ColIsLeafType(col))
-                { answer.Add(col); }
-            }
-        }
-        return answer;
-    }
+    //private List<JsonColumn> GetAllSchemaColumns(bool IncludeNonLeafEntities = true)
+    //{
+    //    List<JsonColumn> answer = [];
+    //    foreach (int identity in ColumnIds)
+    //    {
+    //        if (ChosenData.TryGetJsonColumn(identity, out JsonColumn col))
+    //        {
+    //            if (IncludeNonLeafEntities || ColIsLeafType(col))
+    //            { answer.Add(col); }
+    //        }
+    //    }
+    //    return answer;
+    //}
 
-    private static bool ColIsLeafType(JsonColumn col)
-    {
-        switch (col.JsonType)
-        {
-            case JsonValueKind.Undefined:
-            case JsonValueKind.Object:
-            case JsonValueKind.Array:
-                return false;
-            case JsonValueKind.String:
-            case JsonValueKind.Number:
-            case JsonValueKind.True:
-            case JsonValueKind.False:
-            case JsonValueKind.Null:
-                return true;
-            default:
-                throw new Exception($"Internal error: Bad JsonValueKind '{col.JsonType}' in original JSON path '{col.JsonPathInOriginal}'");
-        }
-    }
+    //private static bool ColIsLeafType(JsonColumn col)
+    //{
+    //    switch (col.JsonType)
+    //    {
+    //        case JsonValueKind.Undefined:
+    //        case JsonValueKind.Object:
+    //        case JsonValueKind.Array:
+    //            return false;
+    //        case JsonValueKind.String:
+    //        case JsonValueKind.Number:
+    //        case JsonValueKind.True:
+    //        case JsonValueKind.False:
+    //        case JsonValueKind.Null:
+    //            return true;
+    //        default:
+    //            throw new Exception($"Internal error: Bad JsonValueKind '{col.JsonType}' in original JSON path '{col.JsonPathInOriginal}'");
+    //    }
+    //}
 
 
-    private void UpdateJsonColumns(List<JsonColumn> updatedList)
+    private static void UpdateJsonColumns(List<JsonColumn> updatedList)
     {
         foreach (JsonColumn newValue in updatedList)
         {
             if (newValue is SystemColumn sysCol)
             {
                 int oldIx = ChosenData.SystemColumns.FindIndex(j => j.SystemIdentifier == sysCol.SystemIdentifier);
-                if (oldIx > -1 ) { ChosenData.SystemColumns[oldIx] = sysCol; }
+                if (oldIx > -1) { ChosenData.SystemColumns[oldIx] = sysCol; }
             }
             else
             {

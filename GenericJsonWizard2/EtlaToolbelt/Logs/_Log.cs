@@ -53,7 +53,7 @@ public class _Log : ILog
         // We only want one start message
         if (logMessage.Level == LogLevel.START)
         {
-            if (Started) { return; } else { Started = true; wait = true; } 
+            if (Started) { return; } else { Started = true; wait = true; }
         }
 
         // Normal messages...

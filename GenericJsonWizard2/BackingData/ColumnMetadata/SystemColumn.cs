@@ -6,9 +6,9 @@ public class SystemColumn : JsonColumn
 
     public int SystemIdentifier { get; set; } = -1;
 
-    public SystemColumn() : base (){ Init(); }
-    public SystemColumn(string name) : base(name) 
-    { 
+    public SystemColumn() : base() { Init(); }
+    public SystemColumn(string name) : base(name)
+    {
         Init();
         SystemIdentifier = NextSystemIdentifier++;
     }
@@ -21,5 +21,14 @@ public class SystemColumn : JsonColumn
     internal override string GetJsonPathInOriginal()
     {
         return $"$System[{SystemIdentifier}]";
+    }
+
+    internal string GetSelectClause()
+    {
+        if (Standardiser.Contains('('))
+        {
+            return $"{Standardiser} as {SqlName}";
+        }
+        throw new Exception($"No valid way to populate system column '{SqlName}'");
     }
 }

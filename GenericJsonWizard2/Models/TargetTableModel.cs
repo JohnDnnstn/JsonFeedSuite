@@ -2,14 +2,11 @@
 
 namespace GenericJsonWizard.Models;
 
-internal class ForeignTableModel : TableModel
+internal class TargetTableModel : TableModel
 {
-    private ForeignTableData _Data { get; set; }
+    private TargetTableData _Data { get; set; }
 
-    public ForeignTableModel(ForeignTableData data) : base(data)
-    {
-        _Data = data;
-    }
+    public TargetTableModel(TargetTableData data) : base(data) => _Data = data;
 
     protected override void CreateTempTableClause()
     {

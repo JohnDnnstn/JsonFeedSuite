@@ -1,5 +1,6 @@
 ﻿using GenericJsonSuite.EtlaToolbelt.Forms;
 using GenericJsonWizard.BackingData.ColumnMetadata;
+using GenericJsonWizard.EtlaToolbelt.Wizards;
 using System.Data;
 
 namespace GenericJsonWizard.BackingData;
@@ -145,7 +146,7 @@ public class YMultiMapControlData : IWizardData, ICloneable
         };
         DataTable.Columns.Add(dataCol);
 
-        
+
         //dataCol = new()
         //{
         //    DataType = typeof(int),
@@ -165,7 +166,7 @@ public class YMultiMapControlData : IWizardData, ICloneable
         DataTable.Clear();
         foreach (int columnIx in Data.ColumnMaps.Keys)
         {
-            XMultiMapColumnMap colMap= Data.ColumnMaps[columnIx];
+            XMultiMapColumnMap colMap = Data.ColumnMaps[columnIx];
 
             AddRow(columnIx, colMap);
         }
@@ -178,7 +179,7 @@ public class YMultiMapControlData : IWizardData, ICloneable
             int columnIx = Data.AddNewTargetColumn();
         }
 
-        for(int ix=0; ix<DataTable.Rows.Count; ix++) 
+        for (int ix = 0; ix < DataTable.Rows.Count; ix++)
         {
             DataRow dataRow = DataTable.Rows[ix];
             int columnIx = Data.GetColumnIx(ix);
@@ -207,7 +208,7 @@ public class YMultiMapControlData : IWizardData, ICloneable
         dataRow["Type"] = targetColumn.SqlType;
         dataRow["Nullable"] = targetColumn.Nullable;
         dataRow["MappedColumn"] = ChosenData.GetMetadata(sourceColIdentifier);
-//        dataRow["ColumnIx"] = columnIx;
+        //        dataRow["ColumnIx"] = columnIx;
         DataTable.Rows.Add(dataRow);
     }
 
@@ -225,38 +226,43 @@ public class YMultiMapControlData : IWizardData, ICloneable
     #endregion
 }
 
-    /// <summary>What metadata source columns map to this target column
-    /// This is where the target column is persisted
-    /// </summary>
-    public class XMultiMapColumnMap 
+/// <summary>What metadata source columns map to this target column
+/// This is where the target column is persisted
+/// </summary>
+public class XMultiMapColumnMap
 {
     public MultiMapColumn TargetColumn { get; set; } = new("");
-    public Dictionary<int,int> SourceColumnIdentifiers = [];
+    public Dictionary<int, int> SourceColumnIdentifiers = [];
 }
 
 /// <summary>Table-level data</summary>
-public class XMultiMapTableData : TableData
+public class XMultiMapTableData : TableData, IFormDataWithCreateMethod<XMultiMapTableData, string>
 {
     public int NextMappingIx { get; set; } = 0;
     public int NexColumnIx { get; set; } = 0;
 
 
     /// <summary> Key=ColumnIx, Value={targetCol,Dictionary of {MappingIx,SourceColMetadataIdentifier} }</summary>
-    public SortedDictionary<int,XMultiMapColumnMap> ColumnMaps = [];
+    public SortedDictionary<int, XMultiMapColumnMap> ColumnMaps = [];
 
     /// <summary> Key = MappingIx, value = backing data for a tab page/// </summary>
-    public SortedDictionary<int,YMultiMapControlData> ControlBackingData = [];
+    public SortedDictionary<int, YMultiMapControlData> ControlBackingData = [];
 
-    public XMultiMapTableData() : base() 
+    public XMultiMapTableData() : base()
     {
         if (ColumnMaps.Count < 1) { AddNewTargetColumn(); }
         if (ControlBackingData.Count < 1) { AddNewMapping(); }
     }
 
+    public static XMultiMapTableData Create(string arg)
+    {
+        throw new NotImplementedException();
+    }
+
     public (int, YMultiMapControlData) AddNewMapping()
     {
         int mappingIx = ++NextMappingIx;
-        YMultiMapControlData controlData = new(this,mappingIx);
+        YMultiMapControlData controlData = new(this, mappingIx);
 
         // Add a dummy Source Column for this mapping to all the existing target columns
         foreach (XMultiMapColumnMap colMap in ColumnMaps.Values)
@@ -292,7 +298,7 @@ public class XMultiMapTableData : TableData
         var colMap = new XMultiMapColumnMap();
 
         // Add a number of dummy source columns associated with this target col, one for each existing tab page
-        foreach(var mappingIx in ControlBackingData.Keys)
+        foreach (var mappingIx in ControlBackingData.Keys)
         {
             colMap.SourceColumnIdentifiers.Add(mappingIx, 0);
         }
@@ -361,4 +367,5 @@ public class XMultiMapTableData : TableData
         }
         return answer;
     }
+
 }

@@ -1,4 +1,5 @@
-﻿using GenericJsonWizard.EtlaToolbelt.Strings;
+﻿using GenericJsonSuite;
+using GenericJsonWizard.EtlaToolbelt.Strings;
 
 namespace GenericJsonWizard.EtlaToolbelt.Forms;
 
@@ -28,14 +29,14 @@ public class Dependent
         _Processor = processor;
         string initially = target.Text;
         string processedValue = _Processor(source.Text);
-        _UseProcess = initially.Equals(processedValue);
+        _UseProcess = initially.Equals(processedValue) || initially.IsWhite() || initially == "_id";
     }
 
     private void Source_TextChanged(object? sender, EventArgs e)
     {
         _CalledFromDependencyUpdate = true;
         string processedValue = _Processor(_Source.Text);
-        if(_UseProcess) { _Target.Text = processedValue; }
+        if (_UseProcess) { _Target.Text = processedValue; }
         _CalledFromDependencyUpdate = false;
     }
 

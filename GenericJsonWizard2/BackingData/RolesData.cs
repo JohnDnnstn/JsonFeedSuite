@@ -10,13 +10,17 @@ public class RolesData : IWizardData
     public string? InitialisedDbPowerUsers { get; set; } = null;
     public string? InitialisedTargetSchemaUsers { get; set; } = null;
 
+    public string? InitialisedDbOwner { get; set; } = null;
+    public string InitialisedLoaderGroupName { get; set; } = "loaders";
+
+
     internal string StagingOwner
     {
         get { return InitialisedStagingOwner ?? "staging_owner"; }
         set { InitialisedStagingOwner = value; }
     }
 
-    public string LoaderRole
+    public string DbLoader
     {
         get { return InitialisedLoaderRole ?? $"{ChosenData.FeedDetails.DbName}_loader"; }
         set { InitialisedLoaderRole = value; }
@@ -40,6 +44,20 @@ public class RolesData : IWizardData
         set { InitialisedTargetSchemaUsers = value; }
     }
 
+    public string DbOwner
+    {
+        get { return InitialisedDbOwner ?? GetDbOwner(); }
+        set { InitialisedDbOwner = value; }
+    }
+
+
+    public string LoaderGroupName
+    {
+        get { return InitialisedLoaderGroupName; }
+        set { InitialisedLoaderGroupName = value; }
+    }
+
+
     private static string GetTargetSchemaOwner()
     {
         var db = ChosenData.FeedDetails.DbName.ToLower();
@@ -62,4 +80,16 @@ public class RolesData : IWizardData
             _ => $"{db}_{schema}_user",
         };
     }
+
+    private string GetDbOwner()
+    {
+        var db = ChosenData.FeedDetails.DbName.ToLower();
+        return db switch
+        {
+            "epic" => "epicadmin",
+            "vsiu_prototype" => "vsiu_owner",
+            _ => db + "_owner",
+        };
+    }
+
 }

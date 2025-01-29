@@ -1,9 +1,10 @@
 ﻿using GenericJsonWizard.BackingData.ColumnMetadata;
+using GenericJsonWizard.EtlaToolbelt.Wizards;
 using static GenericJsonWizard.ChosenData;
 
 namespace GenericJsonWizard.BackingData;
 
-public class OtherTableData : TableData
+public class TargetTableData : TableData, IFormDataWithCreateMethod<TargetTableData, string>
 {
     public bool IsStructureOnly { get; set; } = false;
     public PKVariety PKVariety { get; set; }
@@ -23,22 +24,19 @@ public class OtherTableData : TableData
     #endregion
 
     #region Physical Primary Key related
-    public override List<int> PhysicalPK { 
-        get 
+    public override List<int> PhysicalPK
+    {
+        get
         {
-            switch (PKVariety)
+            return PKVariety switch
             {
-                case PKVariety.ID:
-                    return [Id.Identifier];
-                case PKVariety.SAME:
-                    return LogicalPK;
-                case PKVariety.DIFFERENT:
-                    return DifferentPhysicalPk;
-                default:
-                    throw new Exception($"Unexpected value '{PKVariety}'of PKVariety in table {TableName}");
-            }
-        }  
-        set { } 
+                PKVariety.ID => [Id.Identifier],
+                PKVariety.SAME => LogicalPK,
+                PKVariety.DIFFERENT => DifferentPhysicalPk,
+                _ => throw new Exception($"Unexpected value '{PKVariety}'of PKVariety in table {TableName}"),
+            };
+        }
+        set { }
     }
 
     public List<int> DifferentPhysicalPk { get; set; } = [];
@@ -56,6 +54,12 @@ public class OtherTableData : TableData
     #endregion
     #endregion
 
+    public TargetTableData() : base() { }
+    public TargetTableData(string tableName) : base(tableName) { }
+    public static TargetTableData Create(string tableName)
+    {
+        return new(tableName);
+    }
 
     internal override List<Metadata> GetAllTableColumns()
     {
@@ -67,7 +71,12 @@ public class OtherTableData : TableData
     internal override List<BackfillId> GetBackfillIds()
     {
         List<BackfillId> answer = [];
-        if (HasBackfillId) { answer.Add(BackfillId); }
+        if (HasBackfillId) 
+        {
+            BackfillId.SourceId = Id.Identifier;
+            BackfillId.Table = this;
+            answer.Add(BackfillId); 
+        }
         return answer;
     }
 

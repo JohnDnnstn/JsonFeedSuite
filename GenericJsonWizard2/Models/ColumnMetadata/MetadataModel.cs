@@ -10,15 +10,34 @@ internal class MetadataModel : Script
     private Metadata _Data { get; init; }
 
     internal MetadataModel(Metadata meta)
-    { 
+    {
         _Data = meta;
     }
 
     internal virtual string Defn(bool addDefaults = true)
     {
         Scr($"{_Data.SqlName} {_Data.SqlType} {(!_Data.Nullable ? "NOT " : "")}NULL", false);
-        if (addDefaults && _Data.Default.IsBlack()) { Scr($" {_Data.Default}", false); }
+        if (addDefaults && _Data.Default.IsBlack()) 
+        {
+            if (!_Data.IsId) { Scr(" DEFAULT", false); } 
+            Scr($" {DefaultAsLiteral()}", false); 
+        }
         return ReturnAndClear();
+    }
+
+    internal string DefaultAsLiteral()
+    {
+        if (IsQuotedType()) { return $"'{_Data.Default}'"; }
+        return _Data.Default;
+    }
+
+    internal bool IsQuotedType()
+    {
+        if (_Data is JsonColumn json) { return json.IsQuotedType(); }
+        var sqlType = _Data.SqlType.ToLower();
+        if (sqlType.StartsWith("text") || sqlType.StartsWith("varchar") || sqlType.StartsWith("char") || sqlType.StartsWith("\"")) { return true; }
+        if (sqlType.StartsWith("time") || sqlType.StartsWith("date")) { return true; }
+        return false;
     }
 
     internal string WikiDefn()
@@ -49,7 +68,7 @@ public static class MetadataExtensions
         return builder.ToString();
     }
 
-    public static string EquiJoin(this List<Metadata> list, string prefix1="", string prefix2="")
+    public static string EquiJoin(this List<Metadata> list, string prefix1 = "", string prefix2 = "")
     {
         if (prefix1.IsBlack()) { prefix1 += "."; }
         if (prefix2.IsBlack()) { prefix2 += "."; }
@@ -62,4 +81,5 @@ public static class MetadataExtensions
         }
         return builder.ToString();
     }
+
 }

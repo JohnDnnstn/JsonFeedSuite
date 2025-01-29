@@ -1,4 +1,3 @@
-using System;
 /*
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -13,6 +12,7 @@ using System.Xml.Linq;
 //	Changes to this file will be lost if the code is regenerated.
 //	To make changes or additions, rerun the ETLA Toolbelt Wizard after editing T4 templates if required
 // </auto-generated>
+#nullable enable
 // --------------------------------------------------------------------------------------------------
 
 namespace GenericJsonSuite.EtlaToolbelt.Logs
@@ -38,7 +38,7 @@ namespace GenericJsonSuite.EtlaToolbelt.Logs
 
         /// <summary>The text of a related exception (if any)</summary>
         public string Ex { get; set; } = "";
-        
+
         /// <summary> When the log message was created</summary>
         public DateTime? Stamp { get; set; } = DateTime.Now;
 

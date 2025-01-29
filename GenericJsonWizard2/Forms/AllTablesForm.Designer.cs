@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AllTablesForm));
             groupBox1 = new GroupBox();
             LblDomainsCount = new Label();
             BtnDomains = new Button();
@@ -69,7 +70,7 @@
             groupBox1.Size = new Size(776, 59);
             groupBox1.TabIndex = 100;
             groupBox1.TabStop = false;
-            groupBox1.Text = "Domain Tables";
+            groupBox1.Text = "Domain Tables - All permitted or known values for a single column";
             // 
             // LblDomainsCount
             // 
@@ -100,7 +101,7 @@
             groupBox2.Size = new Size(776, 59);
             groupBox2.TabIndex = 101;
             groupBox2.TabStop = false;
-            groupBox2.Text = "Foreign Tables";
+            groupBox2.Text = "Foreign Tables - One or more columns that will be replaced with a Backfill Id";
             // 
             // LblForeignCount
             // 
@@ -131,7 +132,7 @@
             groupBox3.Size = new Size(776, 59);
             groupBox3.TabIndex = 102;
             groupBox3.TabStop = false;
-            groupBox3.Text = "Other Tables";
+            groupBox3.Text = "Target Tables - More complex  tables";
             // 
             // LblOtherCount
             // 
@@ -162,7 +163,7 @@
             groupBox4.Size = new Size(776, 59);
             groupBox4.TabIndex = 103;
             groupBox4.TabStop = false;
-            groupBox4.Text = "Multi-Mapped Tables";
+            groupBox4.Text = "Multi-Mapped Tables - multiple sets of columns map to a single table";
             // 
             // LblMultiMappedCount
             // 
@@ -193,8 +194,9 @@
             Controls.Add(groupBox3);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "AllTablesForm";
-            Text = "Secondary Tables Form";
+            Text = "All Tables Form";
             Load += SecondaryTablesForm_Load;
             Controls.SetChildIndex(TxtRubric, 0);
             Controls.SetChildIndex(BtnBack, 0);

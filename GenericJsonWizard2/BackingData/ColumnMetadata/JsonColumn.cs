@@ -1,4 +1,5 @@
-﻿using GenericJsonSuite.EtlaToolbelt.Forms;
+﻿using GenericJsonSuite;
+using GenericJsonSuite.EtlaToolbelt.Forms;
 using System.Text.Json;
 
 namespace GenericJsonWizard.BackingData.ColumnMetadata;
@@ -9,7 +10,7 @@ public class JsonColumn : Metadata, IWizardData, ICloneable
     internal static new readonly JsonColumn Zero = new() { Identifier = 0 };
     #endregion
 
-    #region public properties
+    #region properties
     public string JsonName { get; set; } = "";
     public JsonValueKind JsonType { get; set; } = JsonValueKind.Undefined;
     internal string JsonTypeAsString
@@ -24,7 +25,8 @@ public class JsonColumn : Metadata, IWizardData, ICloneable
     // The wrapper would be IWizardData, ICloneable and this class would be neither with these properties dropped
     public string JsonPathInOriginal { get { return GetJsonPathInOriginal(); } }
     internal string JsonPathInDb { get { return GetJsonPathInDb(); } }
-    internal string JsonVariadicPathInDb { get { return GetJsonVariadicPathInDb(); } }
+    internal string JsonVariadicPathInDbAsString { get { return GetJsonVariadicPathInDbAsString(); } }
+    internal List<JsonColumn> AncestorList { get => GetAncestorList(); }
 
     public bool Ignore { get; set; } = false;
     public string ToNull { get; set; } = "";
@@ -64,7 +66,7 @@ public class JsonColumn : Metadata, IWizardData, ICloneable
 
     internal virtual string GetJsonPathInOriginal()
     {
-        if (this == Zero || this==ChosenData.Root || Parent == null) { return "$"; }
+        if (this == Zero || this == ChosenData.Root || Parent == null) { return "$"; }
         var suffix = (JsonType == JsonValueKind.Array ? "[*]" : "");
         return $"{Parent.GetJsonPathInOriginal()}.{JsonName}{suffix}";
     }
@@ -76,10 +78,21 @@ public class JsonColumn : Metadata, IWizardData, ICloneable
         return $"{Parent.GetJsonPathInDb()}.{SqlName}{suffix}";
     }
 
-    internal string GetJsonVariadicPathInDb()
+    internal string GetJsonVariadicPathInDbAsString()
     {
-        if (this == Zero || Parent == null || Parent == ChosenData.Root) { return $"'{SqlName}'"; }
-        return $"{Parent.GetJsonVariadicPathInDb()},'{SqlName}'";
+        if (this == Zero || Parent == null || Parent == ChosenData.Root) { return $""; }
+        var parentVariadic = Parent.GetJsonVariadicPathInDbAsString();
+        if (parentVariadic.IsBlack()) { parentVariadic += ","; }
+        return $"{parentVariadic}'{SqlName}'";
+    }
+
+    internal List<JsonColumn> GetAncestorList()
+    {
+        if (this == Zero || Parent == null || Parent == ChosenData.Root) { return []; }
+        List<JsonColumn> answer = [];
+        answer.AddRange(Parent.GetAncestorList());
+        if (!ColIsLeafType()) { answer.Add(this); }
+        return answer;
     }
 
     internal bool ColIsLeafType()
@@ -98,6 +111,17 @@ public class JsonColumn : Metadata, IWizardData, ICloneable
                 return true;
             default:
                 throw new Exception($"Internal error: Bad JsonValueKind '{JsonType}' in original JSON path '{JsonPathInOriginal}'");
+        }
+    }
+
+    internal bool IsQuotedType()
+    {
+        switch (JsonType)
+        {
+            case JsonValueKind.String:
+                return true;
+            default:
+                return false;
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace GenericJsonWizard.Forms
 {
-    partial class OtherTableForm
+    partial class TargetTableForm
     {
         /// <summary>
         /// Required designer variable.
@@ -30,7 +30,7 @@ namespace GenericJsonWizard.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OtherTableForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TargetTableForm));
             label2 = new Label();
             TxtSchemaName = new TextBox();
             label3 = new Label();
@@ -371,7 +371,7 @@ namespace GenericJsonWizard.Forms
             TxtWarnings.Size = new Size(895, 325);
             TxtWarnings.TabIndex = 0;
             // 
-            // OtherTableForm
+            // TargetTableForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -382,7 +382,8 @@ namespace GenericJsonWizard.Forms
             Controls.Add(label3);
             Controls.Add(TxtSchemaName);
             Controls.Add(label2);
-            Name = "OtherTableForm";
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            Name = "TargetTableForm";
             Text = "OtherTableForm";
             Load += OtherTableForm_Load;
             Controls.SetChildIndex(TxtRubric, 0);

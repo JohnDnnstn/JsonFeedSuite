@@ -4,7 +4,7 @@ using GenericJsonWizard.Forms;
 
 namespace GenericJsonWizard.Wizards;
 
-internal class DomainTableWizard : RepeatingWizard<DomainTableForm,DomainTableData>
+internal class DomainTableWizard : RepeatingWizard<DomainTableForm, DomainTableData>
 {
     public DomainTableWizard() : base(ChosenData.DomainTables) { }
 

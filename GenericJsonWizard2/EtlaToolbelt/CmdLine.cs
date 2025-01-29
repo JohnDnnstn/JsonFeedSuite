@@ -88,7 +88,7 @@ namespace GenericJsonSuite.EtlaToolbelt
         /// <param name="switchName">The name of the mandatory switch to be searched for</param>
         /// <returns>The value of the mandatory switch that was supplied on the command line</returns>
         /// <exception cref="Exception"> thrown when the named switch was not supplied on the command line</exception>
-        public static string GetMandatorySwitch(string switchName) 
+        public static string GetMandatorySwitch(string switchName)
         {
             return Implementation.GetMandatorySwitch(switchName);
         }

@@ -1,17 +1,18 @@
 ﻿using GenericJsonSuite;
 using GenericJsonSuite.EtlaToolbelt.Forms;
 using GenericJsonWizard.BackingData;
+using GenericJsonWizard.BackingData.ColumnMetadata;
 using GenericJsonWizard.EtlaToolbelt.Forms;
 
 namespace GenericJsonWizard.Forms;
 
-public partial class OtherTableForm : RepeatingWizardForm
+public partial class TargetTableForm : RepeatingWizardForm
 {
-    private OtherTableData _BackingData { get; set; }
+    private TargetTableData _BackingData { get; set; }
 
     private string _WarningMsg = "";
 
-    public OtherTableForm(OtherTableData backingData)
+    public TargetTableForm(TargetTableData backingData)
     {
         InitializeComponent();
         TxtRubric.Text = "This allows the definition of less standard secondary tables";
@@ -36,8 +37,9 @@ public partial class OtherTableForm : RepeatingWizardForm
         Map.Add(TxtIdName, nameof(backingData.IdName));
         Map.Add(CmbIdType, nameof(backingData.IdType));
         Map.Add(ChkBackfillId, nameof(backingData.HasBackfillId));
-        //Map.Add(TxtBackfillId, nameof(backingData.BackfillIdName));
-        Map.Add(TxtBackfillId, nameof(backingData.BackfillId.SqlName));
+        Map.Add(TxtBackfillId, nameof(backingData.BackfillIdName));
+
+        Dependent depdendent = new(TxtIdName, TxtBackfillId, Dependent.MakeSame);
     }
 
     private void DisplayTabPages(string warning = "", bool forceRedisplay = false)
@@ -50,6 +52,7 @@ public partial class OtherTableForm : RepeatingWizardForm
         if (ChkStructureOnly.Checked)
         {
             TabDefinitionPages.TabPages.Add(TpgPhysicalPK);
+            TabDefinitionPages.TabPages.Add(TpgLogicalPK);
         }
         else
         {
@@ -75,6 +78,25 @@ public partial class OtherTableForm : RepeatingWizardForm
             TabDefinitionPages.SelectedTab = currentPage;
         }
         _WarningMsg = warning;
+    }
+
+    protected override bool IsInvalid(out string? msg)
+    {
+        msg = "";
+        var cols = L2lColumns.ChosenItems.Cast<Metadata>().ToList();
+        if (!TableData.ChosenColsAreCompatible(cols, out JsonColumn aCol, out JsonColumn? anotherCol))
+        { msg += $"Columns '{aCol.SqlName}' and '{anotherCol?.SqlName}' are in different JSON heirarchies and so incompatible\n"; }
+
+        if (RdoPhysicalPkNone.Checked)
+        { msg = "No physical primary key chosen\n"; }
+
+        if (RdoPhysicalPkSame.Checked && L2lLogicalPK.GetChosenObjects().Count() < 1)
+        { msg = "Chose physical primary to be same as logical but havenot chosen logical primary key\n"; }
+
+        if (RdoPhysicalPkDifferent.Checked && L2lPhysicalPK.GetChosenObjects().Count() < 1)
+        { msg = "Physical primary key has not been defined\n"; }
+
+        return msg.IsBlack();
     }
 
     private void OtherTableForm_Load(object sender, EventArgs e)

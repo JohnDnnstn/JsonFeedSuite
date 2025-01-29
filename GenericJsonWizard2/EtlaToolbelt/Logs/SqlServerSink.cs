@@ -1,6 +1,3 @@
-using System;
-using System.Diagnostics;
-
 namespace GenericJsonSuite.EtlaToolbelt.Logs
 {
     /// <summary>Intended to be the code that sends log messages to a SQL database - Not Implelemnted Yet</summary>

@@ -33,7 +33,7 @@ public static partial class ChosenData
         JsonColumn? answer = JsonColumns.Find(m => m.Identifier == identifier);
         if (answer != null) { jsonCol = answer; return true; }
 
-        answer = SystemColumns.Find(m=> m.Identifier == identifier);
+        answer = SystemColumns.Find(m => m.Identifier == identifier);
         if (answer != null) { jsonCol = answer; return true; }
 
         jsonCol = JsonColumn.Zero;
@@ -43,10 +43,10 @@ public static partial class ChosenData
     internal static bool TryGetMetadata(int identifier, out Metadata meta)
     {
         Metadata? answer = GetAllMetadata().Find(m => m.Identifier == identifier);
-        if (answer != null) 
-        { 
-            meta = answer;  
-            return true; 
+        if (answer != null)
+        {
+            meta = answer;
+            return true;
         }
 
         meta = Metadata.Zero;
@@ -157,7 +157,7 @@ public static partial class ChosenData
         // Columns from Other tables
         // zero or one Id
         // zero or one Backfilled Id
-        foreach (OtherTableData other in OtherTables)
+        foreach (TargetTableData other in TargetTables)
         {
             if (other == thisTable) { return answer; }
             if (includeNonVisibleCols && other.HasId) { answer.Add(other.Id); }

@@ -14,7 +14,7 @@ public interface IWizardData
 
 public interface IWizardData2D : IWizardData
 {
-    public int RowCount { get;}
+    public int RowCount { get; }
     public int ColCount { get; }
     public object this[int row, int col] { get; set; }
 

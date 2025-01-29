@@ -2,15 +2,22 @@
 
 public class BackfillId : Metadata
 {
-    public int? SourceId { get; set; } = null;
+    internal int SourceId { get; set; } = 0;
+    internal TableData? Table { get; set; } = null;
+
 
     public override string SqlType
     {
         get
         {
-            if (SourceId == null) { return "INT"; } else { return ChosenData.GetMetadata(SourceId.Value).SqlType; }
+            if (SourceId == 0 || !ChosenData.TryGetMetadata(SourceId, out Metadata meta))
+            { return "INT"; }
+            else
+            { return meta.SqlType; }
         }
     }
+
+    public string Alias() { return $"backfill{Identifier}"; }
 
     /// <summary>Constructor used by Persistence</summary>
     public BackfillId() : base() => Init();

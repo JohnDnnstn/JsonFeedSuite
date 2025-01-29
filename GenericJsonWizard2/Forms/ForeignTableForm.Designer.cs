@@ -223,6 +223,7 @@ namespace GenericJsonWizard.Forms
             Controls.Add(TxtTableName);
             Controls.Add(label2);
             Controls.Add(TxtSchemaName);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "ForeignTableForm";
             Text = "ForeignTableForm";
             Load += ForeignTableForm_Load;

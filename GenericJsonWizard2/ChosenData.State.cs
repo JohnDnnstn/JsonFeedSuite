@@ -7,6 +7,7 @@ public static partial class ChosenData
 {
     public class State
     {
+        public int NextMetadataIdentifier { get => ChosenData.NextMetadataIdentifier; set => ChosenData.NextMetadataIdentifier = value; }
         public bool ShowJsonEntities { get => ChosenData.ShowJsonEntities; set => ChosenData.ShowJsonEntities = value; }
         public JsonColumn? Root { get => ChosenData.Root; set => ChosenData.Root = value; }
         public List<JsonColumn> JsonColumns { get => ChosenData.JsonColumns; set => ChosenData.JsonColumns = value; }
@@ -20,7 +21,8 @@ public static partial class ChosenData
         public List<DomainTableData> DomainTables { get => ChosenData.DomainTables; set => ChosenData.DomainTables = value; }
         public List<ForeignTableData> ForeignTables { get => ChosenData.ForeignTables; set => ChosenData.ForeignTables = value; }
         public List<XMultiMapTableData> MultiMapTables { get => ChosenData.MultiMapTables; set => ChosenData.MultiMapTables = value; }
-        public List<OtherTableData> OtherTables { get => ChosenData.OtherTables; set => ChosenData.OtherTables = value; }
+        public List<TargetTableData> TargetTables { get => ChosenData.TargetTables; set => ChosenData.TargetTables = value; }
+        public List<JunctionTableData> JunctionTables { get => ChosenData.JunctionTables; set => ChosenData.JunctionTables = value; }
 
         public ScriptData ScriptData { get => ChosenData.ScriptData; set => ChosenData.ScriptData = value; }
 
@@ -36,6 +38,8 @@ public static partial class ChosenData
             ColumnsData = new();
             DomainTables = [];
             ForeignTables = [];
+            MultiMapTables = [];
+            TargetTables = [];
             ScriptData = new();
         }
     }

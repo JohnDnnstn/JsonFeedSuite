@@ -9,7 +9,7 @@ public class UndomainColumnData : IWizardData
 
     public required DomainedColumn DomainedColumn { get; set; }
 
-    public string ColumnName { get { return DomainedColumn?.UnderlyingColumn?.SqlName ?? ""; }  set { DomainedColumn.UnderlyingColumn.SqlName = value; } }
+    public string ColumnName { get { return DomainedColumn?.UnderlyingColumn?.SqlName ?? ""; } set { DomainedColumn.UnderlyingColumn.SqlName = value; } }
 
     public string Target { get; set; } = "";
 

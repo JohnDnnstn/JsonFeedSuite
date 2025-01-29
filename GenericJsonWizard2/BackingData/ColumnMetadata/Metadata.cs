@@ -2,11 +2,11 @@
 
 public class Metadata
 {
-    public enum MetadataVariety { UNKNOWN, SYSTEM, JSON, ID, BACKFILLID, DOMAIN_COLUMN, MULTIMAP_COLUMN };
+    public enum MetadataVariety { UNKNOWN, SYSTEM, JSON, USER_DEFINED, ID, BACKFILLID, DOMAIN_COLUMN, MULTIMAP_COLUMN };
 
     #region static properties
     internal static readonly Metadata Zero = new() { Identifier = 0 };
-    private static int NextIdentifier { get; set; } = 1000;
+    internal static int NextIdentifier { get; set; } = 1000;
     #endregion
 
     // temp!!

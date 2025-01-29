@@ -1,5 +1,6 @@
 ﻿using GenericJsonSuite.EtlaToolbelt.Forms;
 using GenericJsonWizard.BackingData;
+using GenericJsonWizard.BackingData.ColumnMetadata;
 using GenericJsonWizard.EtlaToolbelt.Forms;
 
 namespace GenericJsonWizard.Forms;
@@ -25,6 +26,18 @@ public partial class ForeignTableForm : RepeatingWizardForm
         Map.Add(ChkHasBackfilledId, nameof(backingData.HasBackfillId));
         Map.Add(TxtBackfilledIdName, nameof(backingData.BackfillIdName));
         Map.Add(L2lColumns, nameof(backingData.AllCandidates), nameof(backingData.ChosenObjects));
+    }
+
+    protected override bool IsInvalid(out string? msg)
+    {
+        var cols = L2lColumns.ChosenItems.Cast<Metadata>().ToList();
+        if (!TableData.ChosenColsAreCompatible(cols, out JsonColumn aCol, out JsonColumn? anotherCol))
+        {
+            msg = $"Columns '{aCol.SqlName}' and '{anotherCol?.SqlName}' are in different JSON heirarchies and so incompatible";
+            return true;
+        }
+        msg = "";
+        return false;
     }
 
     private void ForeignTableForm_Load(object sender, EventArgs e)

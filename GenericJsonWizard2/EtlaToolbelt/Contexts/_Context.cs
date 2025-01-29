@@ -18,7 +18,7 @@ namespace GenericJsonSuite.EtlaToolbelt.Contexts;
 /// </summary>
 public class _Context : IContext
 {
-	private string? _EnvValue {get; set; }
+    private string? _EnvValue { get; set; }
     private const string _EnvVariableName = "NETCORE_ENVIRONMENT";
 
     /// <summary>The constructor
@@ -26,7 +26,7 @@ public class _Context : IContext
     /// </summary>
     public _Context()
     {
-		Env = GetEnv();
+        Env = GetEnv();
 
         var appPath = Environment.CommandLine.Split(' ')[0].Replace("\"", "");
         App = Path.GetFileNameWithoutExtension(appPath);
@@ -63,9 +63,9 @@ public class _Context : IContext
     /// </summary>
     /// <returns>The name of the environment the application is running in or UNKNOWN if this cannot be ascertained</returns>
 	protected virtual string GetEnv()
-	{
+    {
         var _EnvValue = Environment.GetEnvironmentVariable(_EnvVariableName);
         if (string.IsNullOrWhiteSpace(_EnvValue)) { _EnvValue = "UNKNOWN"; }
-		return _EnvValue;
-	}
+        return _EnvValue;
+    }
 }

@@ -6,9 +6,6 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericJsonWizard2", "GenericJsonWizard2\GenericJsonWizard2.csproj", "{5A41B5D5-F6FC-42FF-8718-63A5CA8E2A74}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{60E7E172-9407-4F64-9737-D6D3CC780E02}"
-	ProjectSection(SolutionItems) = preProject
-		GenericJsonWizard2\.editorconfig = GenericJsonWizard2\.editorconfig
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

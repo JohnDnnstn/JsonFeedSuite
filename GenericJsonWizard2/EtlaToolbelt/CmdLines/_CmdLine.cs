@@ -220,7 +220,7 @@ namespace GenericJsonSuite.EtlaToolbelt.CmdLines
                     var msg = $"Missing mandatory switch '{mandatory}'";
                     Log.Fatal(msg);
                     Log.Fatal(_Usage);
-                    Console.WriteLine(msg,_Usage);
+                    Console.WriteLine(msg, _Usage);
                     throw new Exception(msg);
                 }
             }

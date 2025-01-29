@@ -169,7 +169,7 @@ public partial class MultiMappedTableForm : RepeatingWizardForm, IRaisesTableNam
     private void InitialiseTabPages()
     {
         TabControl.TabPages.Clear();
-        foreach (var (mappingIx,controlData) in _BackingData.ControlBackingData)
+        foreach (var (mappingIx, controlData) in _BackingData.ControlBackingData)
         {
             AddNewTabPage(mappingIx, controlData);
         }
@@ -197,7 +197,7 @@ public partial class MultiMappedTableForm : RepeatingWizardForm, IRaisesTableNam
     private void BtnAddMapping_Click(object sender, EventArgs e)
     {
         (int mappingIx, YMultiMapControlData controlData) = _BackingData.AddNewMapping();
-        AddNewTabPage(mappingIx,controlData);
+        AddNewTabPage(mappingIx, controlData);
     }
 
     private void TabControl_SelectedIndexChanged(object sender, EventArgs e)

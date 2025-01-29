@@ -24,6 +24,7 @@ public partial class WelcomeForm : BaseWizardForm
     {
         var temp = new List<string>(ChosenData.FeedList);
         temp.Reverse();
+        CmbFeeds.Items.Clear();
         CmbFeeds.Items.AddRange([.. temp]);
     }
 

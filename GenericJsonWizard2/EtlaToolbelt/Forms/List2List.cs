@@ -17,10 +17,10 @@ public partial class List2List : UserControl
     public event EventHandler<DestinationSelectedArgs>? DestinationSelectedIndexChanged;
     public event Action<string>? SourceListInitWithMissingElement;
 
-    public class DestinationSelectedArgs : EventArgs 
+    public class DestinationSelectedArgs : EventArgs
     {
         public int SelectedIndex { get; set; }
-        public string? SelectedText { get; set; }    
+        public string? SelectedText { get; set; }
     }
 
     protected virtual void BroadcastListChangedEvent(EventArgs e)
@@ -102,9 +102,9 @@ public partial class List2List : UserControl
             if (srcItem != null) { LstSource.Items.Add(srcItem); }
         }
 
-        if (broadcastEvent && !oldSrc.SequenceEqual(LstSource.ToStringList())) 
-        { 
-            BroadcastListChangedEvent(new EventArgs()); 
+        if (broadcastEvent && !oldSrc.SequenceEqual(LstSource.ToStringList()))
+        {
+            BroadcastListChangedEvent(new EventArgs());
         }
     }
 
@@ -325,7 +325,7 @@ public static class ListBoxExtensions
         List<string> answer = [];
         foreach (var item in box.Items)
         {
-            answer.Add(item?.ToString()??"");
+            answer.Add(item?.ToString() ?? "");
         }
         return answer;
     }
@@ -341,7 +341,7 @@ public static class ListBoxExtensions
     }
 }
 
-public class List2ListControlMapping(List2List ctrl, string dataSourcePropertyName, string dataDestinationPropertyName) 
+public class List2ListControlMapping(List2List ctrl, string dataSourcePropertyName, string dataDestinationPropertyName)
     : ControlMapping(ctrl, nameof(ctrl.ChosenItems), dataDestinationPropertyName)
 {
     private string _DataSourcePropertyName { get; set; } = dataSourcePropertyName;

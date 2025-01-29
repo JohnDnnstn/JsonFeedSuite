@@ -9,7 +9,7 @@ namespace GenericJsonWizard.Forms
     public partial class DomainTableForm : RepeatingWizardForm, IRaisesTableNameChangedEvent
     {
         private DomainTableData _BackingData { get; set; }
-        private List<Dependent> _Dependents = [];
+        private readonly List<Dependent> _Dependents = [];
 
         #region events
         public delegate void TableNameChanged_Handler(string newName);
@@ -104,7 +104,7 @@ namespace GenericJsonWizard.Forms
             DomainedColumnControl ctrl = new(data);
             answer.Controls.Add(ctrl);
             ctrl.Dock = DockStyle.Fill;
-            
+
             //ctrl.InitialiseColumnList(_BackingData.AllCandidates.Cast<object>());//ChosenData.SchemaColumns.GetAllSchemaColumns().Cast<object>());
             ctrl.InitialiseColumnList(_BackingData.GetAllCandidateNames());
             if (data != null) { ctrl.SetChosenColumn(data.UnderlyingColumn.SqlName); }

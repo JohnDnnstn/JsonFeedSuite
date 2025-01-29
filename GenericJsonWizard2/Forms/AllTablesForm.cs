@@ -8,7 +8,7 @@ public partial class AllTablesForm : BaseWizardForm
     private static int DomainCount => ChosenData.DomainTables.Count;
     private static int ForeignCount => ChosenData.ForeignTables.Count;
     private static int MultiMapCount => ChosenData.MultiMapTables.Count;
-    private static int OtherCount => ChosenData.OtherTables.Count;
+    private static int OtherCount => ChosenData.TargetTables.Count;
 
     public AllTablesForm()
     {
@@ -48,7 +48,7 @@ public partial class AllTablesForm : BaseWizardForm
 
     private void BtnOthers_Click(object sender, EventArgs e)
     {
-        var wizard = new OtherTableWizard();
+        var wizard = new TargetTableWizard();
         var result = wizard.Show(this);
         if (result == FormResult.EXIT) { DialogResult = DialogResult.Cancel; }
         LblOtherCount.Text = $"({OtherCount})";

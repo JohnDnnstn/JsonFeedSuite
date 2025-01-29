@@ -14,7 +14,7 @@ namespace GenericJsonSuite.EtlaToolbelt.Wizards;
 /// <summary>A repeating wizard allows the user to go through a number of identical forms, adding or removing some of them as required
 /// A use case is when defining foreign keys for a table - there may be any number of these but he form definig them will be identical
 /// </summary>
-public abstract class RepeatingWizard<TF, TD> : BaseWizard
+public abstract class RepeatingWizard2<TF, TD> : BaseWizard
     where TF : RepeatingWizardForm
     where TD : IWizardData, IFormDataWithCreateMethod<TD,string>
 {
@@ -26,7 +26,7 @@ public abstract class RepeatingWizard<TF, TD> : BaseWizard
     /// <summary>Constructor.  Inititialises the list of forms from the data passed in as an argument (or from a new data item if none passed)
     /// </summary>
     /// <param name="data">Any existing user-chosen data</param>
-    public RepeatingWizard(List<TD> data) : base()
+    public RepeatingWizard2(List<TD> data) : base()
     {
         Data = data;
         Forms = [];

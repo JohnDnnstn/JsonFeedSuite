@@ -1,4 +1,7 @@
 ﻿using GenericJsonWizard.BackingData;
+using GenericJsonWizard.BackingData.ColumnMetadata;
+using System.Text;
+using System.Text.Json;
 
 namespace GenericJsonWizard.Models;
 
@@ -6,10 +9,43 @@ internal class DomainTableModel : TableModel
 {
     private DomainTableData _Data { get; set; }
 
-    public DomainTableModel(DomainTableData data) : base(data)
+    public DomainTableModel(DomainTableData data) : base(data) => _Data = data;
+
+    public override string Defn(bool isLogged = true, int indent = 0)
     {
-        _Data = data;
+        Scr(base.Defn(isLogged, indent));
+        Scr(PopulateDomain());
+        return ReturnAndClear();
     }
+
+    protected string PopulateDomain()
+    {
+        bool isQuotedType = false;
+        foreach (var domainedCol in _Data.DomainedColumns)
+        {
+            JsonColumn? underlyingColumn = domainedCol.UnderlyingColumn;
+            if (underlyingColumn != null && underlyingColumn.Identifier > 0)
+            {
+                isQuotedType |= underlyingColumn.IsQuotedType();
+            }
+        }
+
+        if (_Data.PermittedValues.Count < 1) { return ""; }
+
+        var builder = new StringBuilder();
+        builder.Append($"INSERT INTO {_Data.QualifiedTableName}({_Data.DomainColumn}) VALUES\n\t");
+        var format = isQuotedType ? "('{0}')" : "({0})";
+        bool first = true;
+        foreach (var val in _Data.PermittedValues)
+        {
+            if (first) { first = false; } else { builder.Append(",\n\t"); }
+            builder.AppendFormat(format, val);
+        }
+        builder.AppendLine();
+        builder.AppendLine($"ON CONFLICT({_Data.DomainColumn}) DO NOTHING;");
+        return builder.ToString();
+    }
+
 
     public string CheckValues(int indent)
     {
@@ -32,4 +68,5 @@ internal class DomainTableModel : TableModel
         }
         return ReturnAndClear();
     }
+
 }

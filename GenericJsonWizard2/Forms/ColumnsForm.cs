@@ -26,8 +26,8 @@ public partial class ColumnsForm : BaseWizardForm
 
         Map = new FormMapper(backingData);
 
-        Map.Add(ChkShowJsonEntities, nameof(backingData.ShowJsonEntities));
-        Map.Add<JsonColumn>(GrdColumns, nameof(backingData.ColumnMetadata));
+        Map.Add(ChkShowJsonEntities, nameof(ColumnsData.ShowJsonEntities));
+        Map.Add<JsonColumn>(GrdColumns, nameof(ColumnsData.ColumnMetadata));
     }
 
     private void InitialiseGrid()
@@ -178,12 +178,12 @@ public partial class ColumnsForm : BaseWizardForm
                 JsonSchemaAnalyser.AnalyseFile(ChosenData.FeedDetails.Filepath);
                 _BackingData.SetColumnList(ChosenData.JsonColumns);
                 ChkShowJsonEntities.Checked = false;
-                _BackingData.ShowJsonEntities = false;
+                ColumnsData.ShowJsonEntities = false;
 
                 HasAnalysed = true;
                 IsAnalysing = false;
                 BtnRevert.Visible = BtnRevert.Enabled = true;
-                GrdColumns.SetList(_BackingData.ColumnMetadata);
+                GrdColumns.SetList(ColumnsData.ColumnMetadata);
             }
             catch (Exception ex)
             {
@@ -218,7 +218,7 @@ public partial class ColumnsForm : BaseWizardForm
             ShowColumnDetails(row);
         }
         // 
-        if (col == ColIndexIgnore && row != -1 && row >= _BackingData.ColumnMetadata.Count)
+        if (col == ColIndexIgnore && row != -1 && row >= ColumnsData.ColumnMetadata.Count)
         {
             GrdColumns.EndEdit();
         }
@@ -226,7 +226,7 @@ public partial class ColumnsForm : BaseWizardForm
 
     private void ChkShowJsonEntities_CheckedChanged(object sender, EventArgs e)
     {
-        _BackingData.ShowJsonEntities = ChkShowJsonEntities.Checked;
+        ColumnsData.ShowJsonEntities = ChkShowJsonEntities.Checked;
         if (Map != null) { Map.Load(); }
     }
 
@@ -244,7 +244,7 @@ public partial class ColumnsForm : BaseWizardForm
         ChosenData.SystemColumns.Add(col);
         var bind = GrdColumns.DataSource;
         GrdColumns.DataSource = null;
-        GrdColumns.DataSource = new BindingList<JsonColumn>(_BackingData.ColumnMetadata);
+        GrdColumns.DataSource = new BindingList<JsonColumn>(ColumnsData.ColumnMetadata);
         GrdColumns.Refresh();
         GrdColumns.CurrentCell = GrdColumns[colIx, rowIx];
         GrdColumns.BeginEdit(false);

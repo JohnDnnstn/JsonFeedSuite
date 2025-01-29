@@ -123,7 +123,7 @@ internal class JsonSchemaAnalyser
                     {
                         if (requiredItem.ValueKind != JsonValueKind.String) { throw new Exception("Bad required value - not a string"); }
                         string requiredName = requiredItem.GetString()!;
-                        JsonColumn? requiredProperty = FindChildByName(parent,requiredName);
+                        JsonColumn? requiredProperty = FindChildByName(parent, requiredName);
                         if (requiredProperty == null) { throw new Exception($"Required property '{requiredName}' does not exist"); }
                         requiredProperty.Nullable = false;
                     }
@@ -172,7 +172,7 @@ internal class JsonSchemaAnalyser
         DomainTableData? domainWithSamePossibleValuesExists = _DomainTables.Find(d => d.PermittedValues.SequenceEqual(values));
         if (domainWithSamePossibleValuesExists == null)
         {
-            DomainTableData domain = new(column)
+            DomainTableData domain = new(column, null)
             {
                 PermittedValues = values,
                 IsReadOnly = true,
@@ -224,7 +224,7 @@ internal class JsonSchemaAnalyser
         internal List<JsonColumn> Properties = [];
     }
 
-    internal static JsonColumn FindChildByName(JsonColumn parent,string jsonName)
+    internal static JsonColumn FindChildByName(JsonColumn parent, string jsonName)
     {
         foreach (var childIdentifier in parent.ChildIdentifiers)
         {

@@ -41,12 +41,12 @@ public partial class UndomainColumnForm : BaseWizardForm
 
         if (CmbDomain.SelectedIndex == -1) { return; }
 
-        if (isNewDomain) 
+        if (isNewDomain)
         {
             if (TxtNewDomain.Text.IsWhite()) { TxtNewDomain.Text = TxtColumn.Text.GetPlural(); }
             _BackingData.Target = UndomainColumnData.NewDomain;
             _BackingData.NewDomainName = TxtNewDomain.Text;
-            return; 
+            return;
         }
 
         _BackingData.Target = CmbDomain.Text;

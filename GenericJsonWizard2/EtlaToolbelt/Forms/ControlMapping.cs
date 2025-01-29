@@ -58,7 +58,7 @@ public class ComboControlMapping<T> : ControlMapping
     /// <param name="listDataPropertyName">The name of the WizardData property that is mapped to the control's Items property </param>
     public ComboControlMapping(ComboBox ctrl, string chosenCtrlPropertyName, string chosenDataPropertyName, string listDataPropertyName)
         : base(ctrl, chosenCtrlPropertyName, chosenDataPropertyName)
-    { 
+    {
         ListDataPropertyName = listDataPropertyName;
     }
 
@@ -87,7 +87,7 @@ public class ComboControlMapping<T> : ControlMapping
         if (Ctrl is ComboBox combo)
         {
             List<T> list = [];
-            foreach(T val in combo.Items) { list.Add(val); }
+            foreach (T val in combo.Items) { list.Add(val); }
             data.SetPropertyValue(ListDataPropertyName, list);
         }
     }
@@ -103,7 +103,7 @@ public class GridControlMapping<T> : ControlMapping where T : ICloneable, new()
     /// <param name="ctrl">The Winforms Control being associated with a property of the backing data object</param>
     /// <param name="ctrlPropertyName">The specific property of the WinForms control whichis being associated with a property of the backing data object</param>
     /// <param name="dataPropertyName">The specific property of the backing data object being associated with this control</param>
-    public GridControlMapping(DataGridView ctrl, string ctrlPropertyName, string dataPropertyName) 
+    public GridControlMapping(DataGridView ctrl, string ctrlPropertyName, string dataPropertyName)
         : base(ctrl, ctrlPropertyName, dataPropertyName)
     {
     }
@@ -125,10 +125,10 @@ public class GridControlMapping<T> : ControlMapping where T : ICloneable, new()
             var bindingList = new BindingList<T>(itemList);
             ((DataGridView)Ctrl).DataSource = bindingList;
         }
-        else 
+        else
         {
             var reason = "null";
-            if (initialValue != null ) { reason = "not a List<ICloneable>"; }
+            if (initialValue != null) { reason = "not a List<ICloneable>"; }
             var msg = $"Unable to load property '{DataPropertyName}' into the DataGridView as it is {reason}";
             Log.Error(msg);
             throw new Exception(msg);
@@ -179,16 +179,16 @@ public class GridControlMapping2D<TCol> : IControlMapping where TCol : DataGridV
     protected string DataPropertyName { get; set; }
 
     public GridControlMapping2D(DataGridView ctrl, string dataPropertyName)
-    { 
+    {
         Ctrl = ctrl;
         DataPropertyName = dataPropertyName;
     }
 
-    public void Load(IWizardData backingData) 
+    public void Load(IWizardData backingData)
     {
         var initialValue = backingData.GetPropertyValue(DataPropertyName);
-        if (initialValue is not string[,] data ) { return; }
-        
+        if (initialValue is not string[,] data) { return; }
+
         var rowCount = data.GetLength(0);
         var colCount = data.GetLength(1);
 
@@ -204,9 +204,9 @@ public class GridControlMapping2D<TCol> : IControlMapping where TCol : DataGridV
             {
                 DataGridViewRow row = new();
                 row.CreateCells(grid);
-                for(int colIx = 0; colIx < colCount; ++colIx) 
+                for (int colIx = 0; colIx < colCount; ++colIx)
                 {
-                    row.Cells[colIx].Value = data[rowIx,colIx];
+                    row.Cells[colIx].Value = data[rowIx, colIx];
                 }
                 grid.Rows.Add(row);
             }
@@ -217,13 +217,13 @@ public class GridControlMapping2D<TCol> : IControlMapping where TCol : DataGridV
     {
         // Remove the blank New Row row if it exists
         var rowCount = Ctrl.Rows.Count;
-        if (Ctrl.Rows[rowCount-1].IsNewRow) { --rowCount; }
+        if (Ctrl.Rows[rowCount - 1].IsNewRow) { --rowCount; }
 
         // Copy the grid contents into a new array
         string[,] data = new string[rowCount, Ctrl.ColumnCount];
-        for (int row=0; row< rowCount; ++row) 
+        for (int row = 0; row < rowCount; ++row)
         {
-            for(int col = 0; col < Ctrl.ColumnCount; ++col)
+            for (int col = 0; col < Ctrl.ColumnCount; ++col)
             {
                 data[row, col] = Ctrl.Rows[row].Cells[col].Value?.ToString() ?? "";
             }
@@ -281,8 +281,8 @@ public class RadioControlMapping<T>(RadioButton ctrl, string dataPropertyName, T
         catch (Exception ex)
         {
             var msg = $"Internal error.  Failed to set '{DataPropertyName}' from RadioButton {((RadioButton)Ctrl).Text}";
-            Log.Error(msg,ex);
-            throw new Exception(msg,ex);
+            Log.Error(msg, ex);
+            throw new Exception(msg, ex);
         }
     }
 }

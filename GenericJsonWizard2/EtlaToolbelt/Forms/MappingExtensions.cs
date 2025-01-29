@@ -38,7 +38,7 @@ public static class MappingExtensions
     {
         try
         {
-            PropertyInfo? propertyInfo = obj.GetType().GetProperty(propertyName, BindingFlags.Instance|BindingFlags.Public|BindingFlags.NonPublic);
+            PropertyInfo? propertyInfo = obj.GetType().GetProperty(propertyName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
             if (propertyInfo != null && propertyInfo.CanWrite)
             {
                 propertyInfo.SetValue(obj, value);

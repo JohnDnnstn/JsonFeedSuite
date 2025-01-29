@@ -29,15 +29,15 @@ namespace GenericJsonSuite.EtlaToolbelt.Infrastructure;
 ///
 /// The Fascia abstract class below is the base class for all Fascia classes (which should also be abstract)
 /// </summary>
-public abstract class Fascia<TInterface,TFallback> where TFallback : TInterface, new()
+public abstract class Fascia<TInterface, TFallback> where TFallback : TInterface, new()
 {
     private static readonly object _Lock = new();
-	private static TInterface? _Impl;
-	
-	/// <summary>The object implementing the functionality defined by the TInterface</summary>
-	public static TInterface Implementation
-	{
-		get { lock(_Lock) {_Impl ??= new TFallback(); return _Impl;} }
-		set { lock(_Lock) {_Impl = value; } }
-	}
+    private static TInterface? _Impl;
+
+    /// <summary>The object implementing the functionality defined by the TInterface</summary>
+    public static TInterface Implementation
+    {
+        get { lock (_Lock) { _Impl ??= new TFallback(); return _Impl; } }
+        set { lock (_Lock) { _Impl = value; } }
+    }
 }

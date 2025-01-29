@@ -56,7 +56,7 @@ public abstract class Log : Fascia<ILog, _Log>
     /// <param name="path">Optional/Automatic.  The file containing the method that called this method.</param>
     /// <param name="line">Optional/Automatic.  The line in the file containing the method that called this method.</param>		
     public static void Error(string msg, Exception? e = null,
-		[CallerMemberName] string? caller = null, [CallerFilePath] string? path = null, [CallerLineNumber] int line = 0
+        [CallerMemberName] string? caller = null, [CallerFilePath] string? path = null, [CallerLineNumber] int line = 0
         )
     {
         Msg(LogLevel.ERROR, msg, e, caller, path, line);

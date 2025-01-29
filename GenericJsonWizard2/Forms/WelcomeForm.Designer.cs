@@ -28,6 +28,7 @@ partial class WelcomeForm
     /// </summary>
     private void InitializeComponent()
     {
+        System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WelcomeForm));
         groupBox1 = new GroupBox();
         RdoCreateNewFromJson = new RadioButton();
         CmbFeeds = new ComboBox();
@@ -105,6 +106,7 @@ partial class WelcomeForm
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(933, 519);
         Controls.Add(groupBox1);
+        Icon = (Icon)resources.GetObject("$this.Icon");
         Name = "WelcomeForm";
         Text = "Welcome";
         Load += WelcomeForm_Load;

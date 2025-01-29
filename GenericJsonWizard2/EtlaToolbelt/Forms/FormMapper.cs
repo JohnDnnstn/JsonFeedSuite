@@ -14,7 +14,7 @@ public class FormMapper
     protected IWizardData Data { get; set; }
 
     public FormMapper(IWizardData data)
-    { 
+    {
         Data = data;
     }
 
@@ -55,7 +55,7 @@ public class FormMapper
     /// <param name="ctrl">The ComboBox to map</param>
     /// <param name="dataPropertyName">The name of the property of the backing data object to map to this control</param>
     /// <param name="ctrlPropertyName">A different control property to set.  Default: SelectedItem</param>
-    public void Add<T>(ComboBox ctrl, string dataPropertyName,string listDataPropertyName, string? listCtrlPropertyName)
+    public void Add<T>(ComboBox ctrl, string dataPropertyName, string listDataPropertyName, string? listCtrlPropertyName)
     {
         var ctrlPropertyName = nameof(ctrl.SelectedItem);
         _Mappings.Add(new ComboControlMapping<T>(ctrl, ctrlPropertyName, dataPropertyName, listDataPropertyName));

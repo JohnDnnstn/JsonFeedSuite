@@ -79,7 +79,7 @@ public class FileSink : AbstractLogSink
             case 0:
                 dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), app);
                 Directory.CreateDirectory(dir);
-                return Path.Combine(dir, app+".log");
+                return Path.Combine(dir, app + ".log");
             default:
                 throw new Exception("Internal error: File Sink index not matched");
         }
