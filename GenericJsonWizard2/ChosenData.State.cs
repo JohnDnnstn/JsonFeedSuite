@@ -22,7 +22,6 @@ public static partial class ChosenData
         public List<ForeignTableData> ForeignTables { get => ChosenData.ForeignTables; set => ChosenData.ForeignTables = value; }
         public List<XMultiMapTableData> MultiMapTables { get => ChosenData.MultiMapTables; set => ChosenData.MultiMapTables = value; }
         public List<TargetTableData> TargetTables { get => ChosenData.TargetTables; set => ChosenData.TargetTables = value; }
-        public List<JunctionTableData> JunctionTables { get => ChosenData.JunctionTables; set => ChosenData.JunctionTables = value; }
 
         public ScriptData ScriptData { get => ChosenData.ScriptData; set => ChosenData.ScriptData = value; }
 

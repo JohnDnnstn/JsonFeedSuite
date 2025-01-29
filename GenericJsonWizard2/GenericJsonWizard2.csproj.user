@@ -31,9 +31,6 @@
     <Compile Update="Forms\ForeignTableForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Forms\JunctionTableForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="Forms\MultiMapItemControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

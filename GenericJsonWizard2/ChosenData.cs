@@ -42,7 +42,6 @@ public static partial class ChosenData
     public static List<ForeignTableData> ForeignTables { get; set; } = [];
     public static List<XMultiMapTableData> MultiMapTables { get; set; } = [];
     public static List<TargetTableData> TargetTables { get; set; } = [];
-    public static List<JunctionTableData> JunctionTables { get; set; }= [];
 
     public static ScriptData ScriptData { get; set; } = new();
 
