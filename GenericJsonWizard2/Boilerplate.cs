@@ -66,7 +66,8 @@ internal static class Boilerplate
         builder.AppendLine("AS $procedure$");
         builder.AppendLine("DECLARE");
         builder.AppendLine($"\t_feed_name varchar := '{ChosenData.FeedDetails.FeedFullName}';");
-        builder.AppendLine("\t_jsonArgs jsonb:= cast(_args as jsonb);");
+        builder.AppendLine("\t_args_as_jsonb jsonb:= cast(_args as jsonb);");
+        builder.AppendLine("\t_jsonArgs jsonb:= _args_as_jsonb ->> 'input';");
         builder.AppendLine("\t_bad_count int;");
         builder.AppendLine("BEGIN");
         ++indent;
@@ -145,20 +146,20 @@ internal static class Boilerplate
         builder.AppendLine("--");
         builder.AppendLine($"DELETE FROM {definitionShema}._feeds WHERE feed_name='{feedFullName}';");
         builder.AppendLine($"\t\tINSERT INTO {definitionShema}._feeds(feed_name,staging_schema_name,staging_table_name,process_proc_name,field_delimiter,reader_variety,parser_variety,feed_dir,feed_filename,structure_info)");
-        builder.AppendLine($"\t\tVALUES('{feedFullName}','{stagingSchema}',NULL,'{populateProcedure}',NULL,'JSON', 'JSON,'{feedDir}','{feedFile}',NULL);");
+        builder.AppendLine($"\t\tVALUES('{feedFullName}','{stagingSchema}','','{populateProcedure}','|','JSON', 'JSON','{feedDir}','{feedFile}',NULL);");
         builder.AppendLine();
         builder.AppendLine();
 
         builder.AppendLine("--------------------------------------------------------------------------------"); ;
-        builder.AppendLine("-- The _json_map table mapping original json names to their SQL equivalents");
+        builder.AppendLine("-- The _json_metadata table mapping original json names to their SQL equivalents");
         builder.AppendLine("--");
-        builder.AppendLine($"DELETE FROM {definitionShema}._json_map WHERE feed_full_name = '{feedFullName}';");
-        builder.AppendLine($"INSERT INTO {definitionShema}._json_map(feed_full_name,json_name, sql_name) VALUES");
+        builder.AppendLine($"DELETE FROM {definitionShema}._json_metadata WHERE feed_name = '{feedFullName}';");
+        builder.AppendLine($"INSERT INTO {definitionShema}._json_metadata(feed_name,json_path_in_original, sql_name, identifier, sql_type, nullable, to_null, from_null) VALUES");
         bool first = true;
         foreach (JsonColumn jsonCol in ChosenData.JsonColumns)
         {
             if (first) { first = false; } else { builder.AppendLine(","); }
-            builder.Append($"('{feedFullName}','{jsonCol.JsonName}','{jsonCol.SqlName}')");
+            builder.Append($"('{feedFullName}','{jsonCol.JsonPathInOriginal}','{jsonCol.SqlName}',{jsonCol.Identifier},'{jsonCol.SqlType}',{jsonCol.Nullable},'{jsonCol.ToNull}','{jsonCol.FromNull}')");
         }
         builder.AppendLine(";");
         builder.AppendLine();
@@ -169,7 +170,10 @@ internal static class Boilerplate
         builder.AppendLine("--");
         builder.AppendLine($"DELETE FROM {definitionShema}._definitions WHERE feed_name = '{feedFullName}';");
         builder.AppendLine($"INSERT INTO {definitionShema}._definitions(feed_name,definition) VALUES");
-        builder.AppendLine($"'{ChosenData.ToJson()}';");
+        builder.AppendLine("(");
+        builder.AppendLine($"'{feedFullName}',");
+        builder.AppendLine($"'{ChosenData.ToJson()}'");
+        builder.AppendLine(");");
         builder.AppendLine();
         builder.AppendLine();
 

@@ -111,6 +111,7 @@ internal class TableModel : Script
         SelectClause();
         FromClause();
         BackfillJoinClause();
+        OnConflictClause();
         ReturningClause();
         FinalClause();
         Scr(";");
@@ -228,6 +229,18 @@ internal class TableModel : Script
                 }
             }
         }
+    }
+
+    protected void OnConflictClause()
+    {
+        Scr("ON CONFLICT (");
+        bool first = true;
+        foreach (Metadata meta in _Data.LogicalPkMetadata)
+        { 
+            if (first) { first = false; } else { Scr(", ", false); }
+            Scr(meta.SqlName, false);
+        }
+        Scr(") DO NOTHING", false);
     }
 
     protected virtual void ReturningClause()
